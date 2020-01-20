@@ -7,11 +7,13 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.view.isVisible
 
 class MainActivity : AppCompatActivity(), View.OnLongClickListener {
 
 
     private var counter=0
+    lateinit var imageCongrats:ImageView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,7 +23,7 @@ class MainActivity : AppCompatActivity(), View.OnLongClickListener {
         val button1:Button=findViewById(R.id.button1)
         val button2:Button=findViewById(R.id.button2)
         val counterText:TextView=findViewById(R.id.counter)
-        val imageCongrats:ImageView=findViewById(R.id.congrats)
+        imageCongrats=findViewById(R.id.congrats)
 
         button1.setOnClickListener {
             incrementCounter()
@@ -34,6 +36,7 @@ class MainActivity : AppCompatActivity(), View.OnLongClickListener {
             resetCounter()
             counterText.text = counter.toString()
         }
+        counterText.setText(counter.toString())
 
     }
     override fun onLongClick(v: View?): Boolean {
@@ -42,8 +45,15 @@ class MainActivity : AppCompatActivity(), View.OnLongClickListener {
     }
 
     fun incrementCounter(){
-        if(counter<=20){
+        if (counter==10){
+            Toast.makeText(this,"Felicitaciones lograste tu primera meta",Toast.LENGTH_SHORT).show()
             counter++
+        }else if(counter<=19){
+            counter++
+        }else if (counter==20){
+            Toast.makeText(this,"Felicitaciones",Toast.LENGTH_SHORT).show()
+            imageCongrats.isVisible=true
+            imageCongrats.setImageResource(R.drawable.indice)
         }else{
             resetCounter()
         }
@@ -52,6 +62,7 @@ class MainActivity : AppCompatActivity(), View.OnLongClickListener {
 
     fun resetCounter(){
         counter=0
+        imageCongrats.isVisible=false
     }
 
     fun message(){
