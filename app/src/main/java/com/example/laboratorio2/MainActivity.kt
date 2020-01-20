@@ -25,16 +25,15 @@ class MainActivity : AppCompatActivity(), View.OnLongClickListener {
 
         button1.setOnClickListener {
             incrementCounter()
-            counterText.setText(counter.toString())
+            counterText.text = counter.toString()
         }
 
         button1.setOnLongClickListener(this)
 
         button2.setOnClickListener {
             resetCounter()
-            counterText.setText(counter.toString())
+            counterText.text = counter.toString()
         }
-
 
     }
     override fun onLongClick(v: View?): Boolean {
@@ -43,7 +42,11 @@ class MainActivity : AppCompatActivity(), View.OnLongClickListener {
     }
 
     fun incrementCounter(){
-        counter++
+        if(counter<=20){
+            counter++
+        }else{
+            resetCounter()
+        }
 
     }
 
@@ -52,8 +55,17 @@ class MainActivity : AppCompatActivity(), View.OnLongClickListener {
     }
 
     fun message(){
+
+        //goals for win
         var goal1=10-counter
         var goal2=20-counter
-        Toast.makeText(this,"Te faltan $goal1 para tu primera meta",Toast.LENGTH_SHORT).show()
+
+        //evaluate the first goal and then put the second goal in the Toast message
+        if(goal1>=0){
+            Toast.makeText(this,"Te faltan $goal1 para tu primera meta",Toast.LENGTH_SHORT).show()
+        }else{
+            Toast.makeText(this,"Te faltan $goal2 para tu segunda meta",Toast.LENGTH_SHORT).show()
+        }
+
     }
 }
