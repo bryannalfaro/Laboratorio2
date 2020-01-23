@@ -9,13 +9,20 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.isVisible
 
-class MainActivity : AppCompatActivity(), View.OnLongClickListener {
+/**
+ * @author Bryann Alfaro
+ *@since January 24rd,2020
+ *
+ */
+class MainActivity : AppCompatActivity(){
 
 
     private var counter=0
     lateinit var imageCongrats:ImageView
 
-
+    /**
+     * Function that creates the activity
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -30,42 +37,54 @@ class MainActivity : AppCompatActivity(), View.OnLongClickListener {
             counterText.text = counter.toString()
         }
 
-        button1.setOnLongClickListener(this)
+        button1.setOnLongClickListener {
+            message()
+            counter--
+            true
+        }
 
         button2.setOnClickListener {
             resetCounter()
             counterText.text = counter.toString()
         }
-        counterText.setText(counter.toString())
+        counterText.text = counter.toString()
 
     }
-    override fun onLongClick(v: View?): Boolean {
-        message()
-        return false
-    }
-
-    fun incrementCounter(){
-        if (counter==10){
+    /**
+     * Function to increment the counter
+     */
+    private fun incrementCounter(){
+        if (counter==9){
             Toast.makeText(this,"Felicitaciones lograste tu primera meta",Toast.LENGTH_SHORT).show()
+            imageCongrats.isVisible=true
+            imageCongrats.setImageResource(R.drawable.felicitaciones)
             counter++
-        }else if(counter<=19){
+        }else if(counter<=18){
             counter++
-        }else if (counter==20){
+            imageCongrats.isVisible=false
+        }else if (counter==19){
+            counter++
             Toast.makeText(this,"Felicitaciones",Toast.LENGTH_SHORT).show()
             imageCongrats.isVisible=true
             imageCongrats.setImageResource(R.drawable.indice)
         }else{
-            resetCounter()
+
         }
 
     }
 
-    fun resetCounter(){
+    /**
+     * Function to reset the count and set the image invisible
+     */
+    private fun resetCounter(){
         counter=0
         imageCongrats.isVisible=false
     }
 
-    fun message(){
+    /**
+     * Function that sends the message in the Toast
+     */
+    private fun message(){
 
         //goals for win
         var goal1=10-counter
